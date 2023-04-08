@@ -2,7 +2,7 @@
 
 ## Create and publish package to Local Folder using dotnet CLI
 
-```dotnetcli
+```powershell
 dotnet new classlib -n CommonLibrary 
 
 dotnet clean
