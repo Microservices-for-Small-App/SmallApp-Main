@@ -1,18 +1,30 @@
 # Publishing .NET 7 NuGet Packages
 
-## Create and publish package to Local Folder using dotnet CLI
+## 1. Create and publish package to Local Folder using dotnet CLI
+
+### 1.1. Creating required Variables
 
 ```powershell
-dotnet new classlib -n CommonLibrary 
+$localpackagesfolder="C:\LordKrishna\SSP\Packages"
+```
 
+### 1.2. Publishing the packages
+
+```powershell
 dotnet clean
 dotnet build
-dotnet pack -o C:\LordKrishna\Packages\
+dotnet pack -o $localpackagesfolder
+```
 
-dotnet nuget add source C:\LordKrishna\Packages -n Local-Packages
+### 1.3. Adding local packages folder as NuGet source
+
+```powershell
+dotnet nuget add source $localpackagesfolder -n Local-Packages
 ```
 
 ## Add the GitHub package source
+
+### Creating required Variables
 
 ```powershell
 $owner="Microservices-for-Small-App"
