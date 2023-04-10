@@ -10,21 +10,43 @@ $localpackagesfolder="C:\LordKrishna\SSP\Packages"
 
 ### 1.2. Publishing the packages to local folder using PowerShell Windows Terminal
 
+> 1. Navigate to the folder where the .csproj file is present.
+> 1. In this case, it is the `C:\LordKrishna\SSP\Libraries-Common\src\CommonLibrary` folder where the .csproj file is present.
+> 1. Update the `Version`, and `AssemblyVersion` in the .csproj file.
+> 1. Run the following `dotnet` commands.
+
+```xml
+<PropertyGroup>
+    <Version>1.0.18</Version>
+    <AssemblyVersion>1.18</AssemblyVersion>
+</PropertyGroup>
+```
+
 ```powershell
 dotnet clean
 dotnet build
 dotnet pack -o $localpackagesfolder
 ```
 
-![NuGet Packages Local Folder |150x150](./Images/NuGetPackages/NuGetPackages_LocalFolder.PNG)
-
 ## 2. Add the Local NuGet package folder as Package Source
 
 ### 2.1. Adding local packages folder as NuGet source using PowerShell Windows Terminal
 
+> 1. Run the following `dotnet` commands.
+
 ```powershell
-dotnet nuget add source $localpackagesfolder -n Local-Packages
+dotnet nuget add source $localpackagesfolder -n "Local-Packages"
 ```
+
+### 2.2. Verify local packages folder is added as NuGet source
+
+> 1. Run the following `dotnet` commands, to ensure that `Local-Packages` is added as NuGet package source.
+
+```powershell
+dotnet nuget list source
+```
+
+![NuGet Packages Local Folder |150x150](./Images/NuGetPackages/NuGetPackages_LocalFolder.PNG)
 
 ## 3. Create and Publish NuGet packages to GitHub Packages using dotnet CLI and PowerShell
 
