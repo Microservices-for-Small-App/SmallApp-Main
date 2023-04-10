@@ -2,7 +2,7 @@
 
 ## 1. Create and Publish NuGet packages to Local Folder using dotnet CLI and PowerShell
 
-### 1.1. Creating required Variables using PowerShell Windows Terminal
+### 1.1. Create required Variables using PowerShell Windows Terminal
 
 ```powershell
 $localpackagesfolder="C:\LordKrishna\SSP\Packages"
