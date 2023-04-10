@@ -11,9 +11,9 @@ $localpackagesourcename="Local-Packages"
 
 ### 1.2. Publishing the packages to local folder using PowerShell Windows Terminal
 
-> 1. Navigate to the folder where the .csproj file is present.
-> 1. In this case, it is the `C:\LordKrishna\SSP\Libraries-Common\src\CommonLibrary` folder where the .csproj file is present.
-> 1. Update the `Version`, and `AssemblyVersion` in the .csproj file.
+> 1. Navigate to the folder where the `YourLibrary`.csproj file is present.
+> 1. In this case, it is the `C:\LordKrishna\SSP\Libraries-Common\src\CommonLibrary` folder where the `YourLibrary`.csproj file is present.
+> 1. Update the `Version`, and `AssemblyVersion` in the `YourLibrary`.csproj file.
 > 1. Run the following `dotnet` commands.
 
 ```xml
@@ -42,12 +42,11 @@ dotnet nuget add source $localpackagesfolder -n $localpackagesourcename
 ### 2.2. Verify local packages folder is added as NuGet source
 
 > 1. Run the following `dotnet` commands, to ensure that `$localpackagesourcename` is added as NuGet package source.
+> 1. Run the following `dotnet nuget remove source $localpackagesourcename` command, to remove NuGet package source.
 
 ```powershell
 dotnet nuget list source
-dotnet nuget remove source $localpackagesourcename
 ```
-
 
 ![NuGet Packages Local Folder |150x150](./Images/NuGetPackages/NuGetPackages_LocalFolder.PNG)
 
