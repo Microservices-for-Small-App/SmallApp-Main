@@ -6,6 +6,7 @@
 
 ```powershell
 $localpackagesfolder="C:\LordKrishna\SSP\Packages"
+$localpackagesourcename="Local-Packages"
 ```
 
 ### 1.2. Publishing the packages to local folder using PowerShell Windows Terminal
@@ -35,22 +36,40 @@ dotnet pack -o $localpackagesfolder
 > 1. Run the following `dotnet` commands.
 
 ```powershell
-dotnet nuget add source $localpackagesfolder -n "Local-Packages"
+dotnet nuget add source $localpackagesfolder -n $localpackagesourcename
 ```
 
 ### 2.2. Verify local packages folder is added as NuGet source
 
-> 1. Run the following `dotnet` commands, to ensure that `Local-Packages` is added as NuGet package source.
+> 1. Run the following `dotnet` commands, to ensure that `$localpackagesourcename` is added as NuGet package source.
 
 ```powershell
 dotnet nuget list source
+dotnet nuget remove source $localpackagesourcename
 ```
+
 
 ![NuGet Packages Local Folder |150x150](./Images/NuGetPackages/NuGetPackages_LocalFolder.PNG)
 
 ## 3. Create and Publish NuGet packages to GitHub Packages using dotnet CLI and PowerShell
 
 ### 3.1. Creating required Variables using PowerShell Windows Terminal
+
+```powershell
+$localpackagesfolder="C:\LordKrishna\SSP\Packages"
+$version="1.0.20"
+$owner="Microservices-for-Small-App"
+$username="vishipayyallore"
+$package_name="CommonLibrary"
+$gh_pat="ghp_Your_GitHib_Classic_PAT"
+$gh_packages="gHmicroservices"
+
+dotnet clean
+dotnet build -c Release
+dotnet pack --configuration Release -o $localpackagesfolder
+
+dotnet nuget push $localpackagesfolder\$package_name.$version.nupkg --source $gh_packages --api-key $gh_pat
+```
 
 ```powershell
 $owner="Microservices-for-Small-App"
