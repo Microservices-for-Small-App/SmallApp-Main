@@ -55,13 +55,13 @@ dotnet nuget list source
 ### 3.1. Creating required Variables using PowerShell Windows Terminal
 
 ```powershell
+$gh_pat="ghp_Your_GitHib_Classic_PAT"
 # Update the version number and ensure it matches the version in the csproj file
 $version="1.0.21"  
 $localpackagesfolder="C:\LordKrishna\SSP\Packages"
 $owner="Microservices-for-Small-App"
 $username="vishipayyallore"
 $package_name="CommonLibrary"
-$gh_pat="ghp_Your_GitHib_Classic_PAT"
 $gh_packages="gHmicroservices"
 ```
 
