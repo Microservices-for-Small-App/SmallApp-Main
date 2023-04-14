@@ -55,57 +55,30 @@ dotnet nuget list source
 ### 3.1. Creating required Variables using PowerShell Windows Terminal
 
 ```powershell
+$gh_pat="ghp_Your_GitHib_Classic_PAT"
+# Update the version number and ensure it matches the version in the csproj file
 $localpackagesfolder="C:\LordKrishna\SSP\Packages"
-$version="1.0.20"
+$version="1.0.21"  
 $owner="Microservices-for-Small-App"
 $username="vishipayyallore"
 $package_name="CommonLibrary"
-$gh_pat="ghp_Your_GitHib_Classic_PAT"
 $gh_packages="gHmicroservices"
+```
 
+### 3.2. Publishing the packages to GitHub Packages using PowerShell Windows Terminal
+
+```powershell
 dotnet clean
 dotnet build -c Release
 dotnet pack --configuration Release -o $localpackagesfolder
+```
 
+### 3.3. Adding GitHub Packages as NuGet source using PowerShell Windows Terminal
+
+```powershell
 dotnet nuget push $localpackagesfolder\$package_name.$version.nupkg --source $gh_packages --api-key $gh_pat
 ```
 
-```powershell
-$owner="Microservices-for-Small-App"
-$username="vishipayyallore"
-$gh_pat="ghp_Your_GitHib_Classic_PAT"
+![NuGet Packages to GitHub Packages |150x150](./Images/NuGetPackages/NuGetPackages_GitHubPackages.PNG)
 
-dotnet nuget remove source gHmicroservices
-
-dotnet nuget add source --username $username --password $gh_pat --store-password-in-clear-text --name gHmicroservices "https://nuget.pkg.github.com/$owner/index.json"
-
-dotnet nuget list source
-```
-
-```powershell
-$version="1.0.18"
-$owner="Microservices-for-Small-App"
-$username="vishipayyallore"
-$repo="Libraries-Common"
-$gh_pat="ghp_Your_GitHib_Classic_PAT"
-
-dotnet clean
-dotnet build -c Release
-dotnet pack --configuration Release -o C:\LordKrishna\SSP\Packages -p:PackageVersion=$version -p:RepositoryUrl=https://github.com/$owner/$repo
-
-dotnet nuget push C:\LordKrishna\SSP\Packages\CommonLibrary.$version.nupkg --source "gHmicroservices" --api-key $gh_pat
-```
-
-```powershell
-$version="1.0.18"
-$owner="Microservices-for-Small-App"
-$username="vishipayyallore"
-$repo="Libraries-Common"
-$gh_pat="ghp_Your_GitHib_Classic_PAT"
-
-dotnet clean
-dotnet build -c Release
-dotnet pack --configuration Release -o C:\LordKrishna\SSP\Packages
-
-dotnet nuget push C:\LordKrishna\SSP\Packages\CommonLibrary.$version.nupkg --source "gHmicroservices" --api-key $gh_pat
-```
+![NuGet Packages inside GitHub Packages |150x150](./Images/NuGetPackages/NuGetInGitHubPackages.PNG)
