@@ -57,8 +57,8 @@ dotnet nuget list source
 ```powershell
 $gh_pat="ghp_Your_GitHib_Classic_PAT"
 # Update the version number and ensure it matches the version in the csproj file
-$localpackagesfolder="C:\LordKrishna\SSP\Packages"
 $version="1.0.21"  
+$localpackagesfolder="C:\LordKrishna\SSP\Packages"
 $owner="Microservices-for-Small-App"
 $username="vishipayyallore"
 $package_name="CommonLibrary"
