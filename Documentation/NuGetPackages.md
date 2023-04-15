@@ -56,13 +56,26 @@ dotnet nuget list source
 
 ```powershell
 $gh_pat="ghp_Your_GitHib_Classic_PAT"
-# Update the version number and ensure it matches the version in the csproj file
-$version="1.0.21"  
 $localpackagesfolder="C:\LordKrishna\SSP\Packages"
 $owner="Microservices-for-Small-App"
 $username="vishipayyallore"
-$package_name="CommonLibrary"
 $gh_packages="gHmicroservices"
+
+# Update the version number and ensure it matches the version in the csproj file
+$version="1.0.23"  
+$package_name="CommonLibrary"
+
+# Update the version number and ensure it matches the version in the csproj file
+$version="1.0.6"
+$package_name="Catalog.Contracts"
+
+# Update the version number and ensure it matches the version in the csproj file
+$version="1.0.8"
+$package_name="Inventory.Contracts"
+
+# Update the version number and ensure it matches the version in the csproj file
+$version="1.0.8"
+$package_name="Identity.Contracts"
 ```
 
 ### 3.2. Publishing the packages to GitHub Packages using PowerShell Windows Terminal
