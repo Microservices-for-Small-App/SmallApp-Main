@@ -61,18 +61,22 @@ $owner="Microservices-for-Small-App"
 $username="vishipayyallore"
 $gh_packages="gHmicroservices"
 
+cd C:\LordKrishna\SSP\Libraries-Common\src\CommonLibrary
 # Update the version number and ensure it matches the version in the csproj file
 $version="1.0.23"  
 $package_name="CommonLibrary"
 
+cd C:\LordKrishna\SSP\Services-Catalog\src\Catalog.Contracts
 # Update the version number and ensure it matches the version in the csproj file
 $version="1.0.6"
 $package_name="Catalog.Contracts"
 
+cd C:\LordKrishna\SSP\Services-Inventory\src\Inventory.Contracts
 # Update the version number and ensure it matches the version in the csproj file
 $version="1.0.8"
 $package_name="Inventory.Contracts"
 
+cd C:\LordKrishna\SSP\Services-PlayIdentity\Src\Identity.Contracts
 # Update the version number and ensure it matches the version in the csproj file
 $version="1.0.8"
 $package_name="Identity.Contracts"
