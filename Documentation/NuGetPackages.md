@@ -65,25 +65,25 @@ cd C:\LordKrishna\SSP\Libraries-Common\src\CommonLibrary
 # Update the version number and ensure it matches the version in the csproj file
 $version="1.0.24"  
 $package_name="CommonLibrary"
-$host.ui.RawUI.WindowTitle = $package_name
+$host.ui.RawUI.WindowTitle=$package_name
 
 cd C:\LordKrishna\SSP\Services-Catalog\src\Catalog.Contracts
 # Update the version number and ensure it matches the version in the csproj file
 $version="1.0.7"
 $package_name="Catalog.Contracts"
-$host.ui.RawUI.WindowTitle = $package_name
+$host.ui.RawUI.WindowTitle=$package_name
 
 cd C:\LordKrishna\SSP\Services-Inventory\src\Inventory.Contracts
 # Update the version number and ensure it matches the version in the csproj file
 $version="1.0.9"
 $package_name="Inventory.Contracts"
-$host.ui.RawUI.WindowTitle = $package_name
+$host.ui.RawUI.WindowTitle=$package_name
 
 cd C:\LordKrishna\SSP\Services-PlayIdentity\Src\Identity.Contracts
 # Update the version number and ensure it matches the version in the csproj file
 $version="1.0.9"
 $package_name="Identity.Contracts"
-$host.ui.RawUI.WindowTitle = $package_name
+$host.ui.RawUI.WindowTitle=$package_name
 ```
 
 ### 3.2. Publishing the packages to GitHub Packages using PowerShell Windows Terminal
