@@ -14,7 +14,7 @@ $env:GH_PAT="ghp_Your_GitHib_Classic_PAT"
 ```powershell
 cd C:\LordKrishna\SSP\Services-PlayIdentity
 
-docker build --secret id=GH_OWNER --secret id=GH_PAT --pull --rm -f "./Src/Identity.Service/Prod.Dockerfile" -t identityservice:$(Get-Date -Format yyyyMMddHHmmssfff) -t identityservice:latest .
+docker build --secret id=GH_OWNER --secret id=GH_PAT --pull --rm -f "./Src/Identity.Service/Prod.Dockerfile" -t ssp-identityservice:$(Get-Date -Format yyyyMMddHHmmssfff) -t ssp-identityservice:latest .
 ```
 
 ![Build Docker Image Locally |150x150](./Images/Dockerize/Build_Image_Locally_Identity.PNG)
@@ -23,7 +23,37 @@ docker build --secret id=GH_OWNER --secret id=GH_PAT --pull --rm -f "./Src/Ident
 
 ```powershell
 $adminPass="Sample@123$"
-docker run -it --rm -d -p 5002:5002 --name identity -e MongoDbSettings__Host=mongo -e RabbitMQSettings__Host=rabbitmq -e IdentitySettings__AdminUserPassword=$adminPass --network dakar_default identityservice:latest
+docker run -it --rm -d -p 5002:5002 --name ssp-identity -e MongoDbSettings__Host=mongo -e RabbitMQSettings__Host=rabbitmq -e IdentitySettings__AdminUserPassword=$adminPass --network dakar_default ssp-identityservice:latest
 ```
 
 ![Run Docker Container Locally |150x150](./Images/Dockerize/Run_Container_Locally_Identity.PNG)
+
+## 2. Catalog.API
+
+```powershell
+cd C:\LordKrishna\SSP\Services-Catalog
+
+docker build --secret id=GH_OWNER --secret id=GH_PAT --pull --rm -f "./src/Catalog.API/Prod.Dockerfile" -t ssp-catalogapi:$(Get-Date -Format yyyyMMddHHmmssfff) -t ssp-catalogapi:latest .
+
+docker run -it --rm -d -p 5000:5000 --name ssp-catalogapi -e MongoDbSettings__Host=mongo -e RabbitMQSettings__Host=rabbitmq --network dakar_default ssp-catalogapi:latest
+```
+
+## 3. Inventory.API
+
+```powershell
+cd C:\LordKrishna\SSP\Services-Inventory
+
+docker build --secret id=GH_OWNER --secret id=GH_PAT --pull --rm -f "./src/Inventory.API/Prod.Dockerfile" -t ssp-inventoryapi:$(Get-Date -Format yyyyMMddHHmmssfff) -t ssp-inventoryapi:latest .
+
+docker run -it --rm -d -p 5000:5000 --name ssp-inventoryapi -e MongoDbSettings__Host=mongo -e RabbitMQSettings__Host=rabbitmq --network dakar_default ssp-inventoryapi:latest
+```
+
+## 4. Trading.API
+
+```powershell
+cd C:\LordKrishna\SSP\Services-Trading
+
+docker build --secret id=GH_OWNER --secret id=GH_PAT --pull --rm -f "./src/Trading.API/Prod.Dockerfile" -t ssp-tradingapi:$(Get-Date -Format yyyyMMddHHmmssfff) -t ssp-tradingapi:latest .
+
+docker run -it --rm -d -p 5000:5000 --name ssp-tradingapi -e MongoDbSettings__Host=mongo -e RabbitMQSettings__Host=rabbitmq --network dakar_default ssp-tradingapi:latest
+```
