@@ -45,7 +45,7 @@ cd C:\LordKrishna\SSP\Services-Inventory
 
 docker build --secret id=GH_OWNER --secret id=GH_PAT --pull --rm -f "./src/Inventory.API/Prod.Dockerfile" -t ssp-inventoryapi:$(Get-Date -Format yyyyMMddHHmmssfff) -t ssp-inventoryapi:latest .
 
-docker run -it --rm -d -p 5000:5000 --name ssp-inventoryapi -e MongoDbSettings__Host=mongo -e RabbitMQSettings__Host=rabbitmq --network dakar_default ssp-inventoryapi:latest
+docker run -it --rm -d -p 5004:5004 --name ssp-inventoryapi -e MongoDbSettings__Host=mongo -e RabbitMQSettings__Host=rabbitmq --network dakar_default ssp-inventoryapi:latest
 ```
 
 ## 4. Trading.API
@@ -55,5 +55,5 @@ cd C:\LordKrishna\SSP\Services-Trading
 
 docker build --secret id=GH_OWNER --secret id=GH_PAT --pull --rm -f "./src/Trading.API/Prod.Dockerfile" -t ssp-tradingapi:$(Get-Date -Format yyyyMMddHHmmssfff) -t ssp-tradingapi:latest .
 
-docker run -it --rm -d -p 5000:5000 --name ssp-tradingapi -e MongoDbSettings__Host=mongo -e RabbitMQSettings__Host=rabbitmq --network dakar_default ssp-tradingapi:latest
+docker run -it --rm -d -p 5006:5006 --name ssp-tradingapi -e MongoDbSettings__Host=mongo -e RabbitMQSettings__Host=rabbitmq --network dakar_default ssp-tradingapi:latest
 ```
