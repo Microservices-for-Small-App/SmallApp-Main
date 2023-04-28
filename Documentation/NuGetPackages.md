@@ -63,7 +63,7 @@ $gh_packages="gHmicroservices"
 
 cd C:\LordKrishna\SSP\Libraries-Common\src\CommonLibrary
 # Update the version number and ensure it matches the version in the csproj file
-$version="1.0.25"  
+$version="1.0.26"  
 $package_name="CommonLibrary"
 $host.ui.RawUI.WindowTitle=$package_name
 
@@ -81,7 +81,7 @@ $host.ui.RawUI.WindowTitle=$package_name
 
 cd C:\LordKrishna\SSP\Services-PlayIdentity\Src\Identity.Contracts
 # Update the version number and ensure it matches the version in the csproj file
-$version="1.0.9"
+$version="1.0.10"
 $package_name="Identity.Contracts"
 $host.ui.RawUI.WindowTitle=$package_name
 ```
