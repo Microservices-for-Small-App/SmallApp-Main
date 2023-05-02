@@ -28,12 +28,21 @@ $adminPass="Sample@123$"
 docker run -it --rm -d -p 5002:5002 --name ssp-identity -e MongoDbSettings__Host=mongo -e RabbitMQSettings__Host=rabbitmq -e IdentitySettings__AdminUserPassword=$adminPass --network dakar_default ssp-identityservice:latest
 ```
 
-## With Azure CosmosDB and Azure Service Bus
+## With Azure CosmosDB and Local RabbitMQ
 
 ```powershell
 $adminPass="Sample@123$"
 $cosmosDbConnString="[Azure Cosmos DB CONN STRING HERE]"
 docker run -it --rm -d -p 5002:5002 --name ssp-identity -e MongoDbSettings__ConnectionString=$cosmosDbConnString -e RabbitMQSettings__Host=rabbitmq -e IdentitySettings__AdminUserPassword=$adminPass --network dakar_default ssp-identityservice:latest
+```
+
+## With Azure CosmosDB and Azure Service Bus
+
+```powershell
+$adminPass="Sample@123$"
+$cosmosDbConnString="[Azure Cosmos DB CONN STRING HERE]"
+$serviceBusConnString="[CONN STRING HERE]"
+docker run -it --rm -d -p 5002:5002 --name ssp-identity -e MongoDbSettings__ConnectionString=$cosmosDbConnString -e ServiceBusSettings__ConnectionString=$serviceBusConnString -e ServiceSettings__MessageBroker="SERVICEBUS" -e IdentitySettings__AdminUserPassword=$adminPass --network dakar_default ssp-identityservice:latest
 ```
 
 ![Run Docker Container Locally |150x150](./Images/Dockerize/Run_Container_Locally_Identity.PNG)
