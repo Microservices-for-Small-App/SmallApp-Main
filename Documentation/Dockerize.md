@@ -25,6 +25,7 @@ docker build --secret id=GH_OWNER --secret id=GH_PAT --pull --rm -f "./Src/Ident
 
 ```powershell
 $adminPass="Sample@123$"
+
 docker run -it --rm -d -p 5002:5002 --name ssp-identity -e MongoDbSettings__Host=mongo -e RabbitMQSettings__Host=rabbitmq -e IdentitySettings__AdminUserPassword=$adminPass --network dc-mongo-rmq_default ssp-identityservice:latest
 ```
 
@@ -33,6 +34,7 @@ docker run -it --rm -d -p 5002:5002 --name ssp-identity -e MongoDbSettings__Host
 ```powershell
 $adminPass="Sample@123$"
 $cosmosDbConnString="[Azure Cosmos DB CONN STRING HERE]"
+
 docker run -it --rm -d -p 5002:5002 --name ssp-identity -e MongoDbSettings__ConnectionString=$cosmosDbConnString -e RabbitMQSettings__Host=rabbitmq -e IdentitySettings__AdminUserPassword=$adminPass --network dc-mongo-rmq_default ssp-identityservice:latest
 ```
 
@@ -42,6 +44,7 @@ docker run -it --rm -d -p 5002:5002 --name ssp-identity -e MongoDbSettings__Conn
 $adminPass="Sample@123$"
 $cosmosDbConnString="[Azure Cosmos DB CONN STRING HERE]"
 $serviceBusConnString="[CONN STRING HERE]"
+
 docker run -it --rm -d -p 5002:5002 --name ssp-identity -e MongoDbSettings__ConnectionString=$cosmosDbConnString -e ServiceBusSettings__ConnectionString=$serviceBusConnString -e ServiceSettings__MessageBroker="SERVICEBUS" -e IdentitySettings__AdminUserPassword=$adminPass --network dc-mongo-rmq_default ssp-identityservice:latest
 ```
 
@@ -55,8 +58,6 @@ docker run -it --rm -d -p 5002:5002 --name ssp-identity -e MongoDbSettings__Conn
 cd C:\LordKrishna\SSP\Services-Catalog
 
 docker build --secret id=GH_OWNER --secret id=GH_PAT --pull --rm -f "./src/Catalog.API/Prod.Dockerfile" -t ssp-catalogapi:$(Get-Date -Format yyyyMMddHHmmssfff) -t ssp-catalogapi:latest .
-
-docker run -it --rm -d -p 5000:5000 --name ssp-catalogapi -e MongoDbSettings__Host=mongo -e RabbitMQSettings__Host=rabbitmq --network dc-mongo-rmq_default ssp-catalogapi:latest
 ```
 
 ### 2.2. Execute the below mentioned Docker Command(s) in PowerShell Windows Terminal to **RUN** Docker Container
@@ -64,25 +65,24 @@ docker run -it --rm -d -p 5000:5000 --name ssp-catalogapi -e MongoDbSettings__Ho
 #### 2.2.1. With Local MongoDB and RabbitMQ
 
 ```powershell
-$adminPass="Sample@123$"
-docker run -it --rm -d -p 5002:5002 --name ssp-identity -e MongoDbSettings__Host=mongo -e RabbitMQSettings__Host=rabbitmq -e IdentitySettings__AdminUserPassword=$adminPass --network dc-mongo-rmq_default ssp-identityservice:latest
+docker run -it --rm -d -p 5000:5000 --name ssp-catalogapi -e MongoDbSettings__Host=mongo -e RabbitMQSettings__Host=rabbitmq --network dc-mongo-rmq_default ssp-catalogapi:latest
 ```
 
 #### 2.2.2. With Azure CosmosDB and Local RabbitMQ
 
 ```powershell
-$adminPass="Sample@123$"
 $cosmosDbConnString="[Azure Cosmos DB CONN STRING HERE]"
-docker run -it --rm -d -p 5002:5002 --name ssp-identity -e MongoDbSettings__ConnectionString=$cosmosDbConnString -e RabbitMQSettings__Host=rabbitmq -e IdentitySettings__AdminUserPassword=$adminPass --network dc-mongo-rmq_default ssp-identityservice:latest
+
+docker run -it --rm -d -p 5000:5000 --name ssp-catalogapi -e MongoDbSettings__ConnectionString=$cosmosDbConnString -e RabbitMQSettings__Host=rabbitmq --network dc-mongo-rmq_default ssp-catalogapi:latest
 ```
 
 #### 2.2.3. With Azure CosmosDB and Azure Service Bus
 
 ```powershell
-$adminPass="Sample@123$"
 $cosmosDbConnString="[Azure Cosmos DB CONN STRING HERE]"
 $serviceBusConnString="[CONN STRING HERE]"
-docker run -it --rm -d -p 5002:5002 --name ssp-identity -e MongoDbSettings__ConnectionString=$cosmosDbConnString -e ServiceBusSettings__ConnectionString=$serviceBusConnString -e ServiceSettings__MessageBroker="SERVICEBUS" -e IdentitySettings__AdminUserPassword=$adminPass --network dc-mongo-rmq_default ssp-identityservice:latest
+
+docker run -it --rm -d -p 5000:5000 --name ssp-catalogapi -e MongoDbSettings__ConnectionString=$cosmosDbConnString -e ServiceBusSettings__ConnectionString=$serviceBusConnString -e ServiceSettings__MessageBroker="SERVICEBUS" --network dc-mongo-rmq_default ssp-catalogapi:latest
 ```
 
 ## 3. Inventory.API
