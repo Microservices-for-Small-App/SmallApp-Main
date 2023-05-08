@@ -87,12 +87,28 @@ docker run -it --rm -d -p 5000:5000 --name ssp-catalogapi -e MongoDbSettings__Co
 
 ## 3. Inventory.API
 
+### 3.1. Execute the below mentioned Docker Command(s) in PowerShell Windows Terminal to **CREATE** the Docker Image
+
 ```powershell
 cd C:\LordKrishna\SSP\Services-Inventory
 
 docker build --secret id=GH_OWNER --secret id=GH_PAT --pull --rm -f "./src/Inventory.API/Prod.Dockerfile" -t ssp-inventoryapi:$(Get-Date -Format yyyyMMddHHmmssfff) -t ssp-inventoryapi:latest .
+```
 
+### 3.2. Execute the below mentioned Docker Command(s) in PowerShell Windows Terminal to **RUN** Docker Container
+
+#### 3.2.1. With Local MongoDB and RabbitMQ
+
+```powershell
 docker run -it --rm -d -p 5004:5004 --name ssp-inventoryapi -e MongoDbSettings__Host=mongo -e RabbitMQSettings__Host=rabbitmq --network dc-mongo-rmq_default ssp-inventoryapi:latest
+```
+
+#### 3.2.2. With Azure CosmosDB and Local RabbitMQ
+
+```powershell
+$cosmosDbConnString="[Azure Cosmos DB CONN STRING HERE]"
+
+docker run -it --rm -d -p 5000:5000 --name ssp-catalogapi -e MongoDbSettings__ConnectionString=$cosmosDbConnString -e RabbitMQSettings__Host=rabbitmq --network dc-mongo-rmq_default ssp-catalogapi:latest
 ```
 
 ## 4. Trading.API
