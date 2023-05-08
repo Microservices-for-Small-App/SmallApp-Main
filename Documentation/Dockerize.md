@@ -108,7 +108,16 @@ docker run -it --rm -d -p 5004:5004 --name ssp-inventoryapi -e MongoDbSettings__
 ```powershell
 $cosmosDbConnString="[Azure Cosmos DB CONN STRING HERE]"
 
-docker run -it --rm -d -p 5000:5000 --name ssp-catalogapi -e MongoDbSettings__ConnectionString=$cosmosDbConnString -e RabbitMQSettings__Host=rabbitmq --network dc-mongo-rmq_default ssp-catalogapi:latest
+docker run -it --rm -d -p 5004:5004 --name ssp-inventoryapi -e MongoDbSettings__ConnectionString=$cosmosDbConnString -e RabbitMQSettings__Host=rabbitmq --network dc-mongo-rmq_default ssp-inventoryapi:latest
+```
+
+#### 3.2.3. With Azure CosmosDB and Azure Service Bus
+
+```powershell
+$cosmosDbConnString="[Azure Cosmos DB CONN STRING HERE]"
+$serviceBusConnString="[CONN STRING HERE]"
+
+docker run -it --rm -d -p 5004:5004 --name ssp-inventoryapi -e MongoDbSettings__ConnectionString=$cosmosDbConnString -e ServiceBusSettings__ConnectionString=$serviceBusConnString -e ServiceSettings__MessageBroker="SERVICEBUS" --network dc-mongo-rmq_default ssp-inventoryapi:latest
 ```
 
 ## 4. Trading.API
