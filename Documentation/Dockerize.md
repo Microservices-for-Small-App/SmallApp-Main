@@ -122,10 +122,35 @@ docker run -it --rm -d -p 5004:5004 --name ssp-inventoryapi -e MongoDbSettings__
 
 ## 4. Trading.API
 
+### 4.1. Execute the below mentioned Docker Command(s) in PowerShell Windows Terminal to **CREATE** the Docker Image
+
 ```powershell
 cd C:\LordKrishna\SSP\Services-Trading
 
 docker build --secret id=GH_OWNER --secret id=GH_PAT --pull --rm -f "./src/Trading.API/Prod.Dockerfile" -t ssp-tradingapi:$(Get-Date -Format yyyyMMddHHmmssfff) -t ssp-tradingapi:latest .
+```
 
+### 4.2. Execute the below mentioned Docker Command(s) in PowerShell Windows Terminal to **RUN** Docker Container
+
+#### 4.2.1. With Local MongoDB and RabbitMQ
+
+```powershell
 docker run -it --rm -d -p 5006:5006 --name ssp-tradingapi -e MongoDbSettings__Host=mongo -e RabbitMQSettings__Host=rabbitmq --network dc-mongo-rmq_default ssp-tradingapi:latest
+```
+
+#### 4.2.2. With Azure CosmosDB and Local RabbitMQ
+
+```powershell
+$cosmosDbConnString="[Azure Cosmos DB CONN STRING HERE]"
+
+docker run -it --rm -d -p 5006:5006 --name ssp-tradingapi -e MongoDbSettings__ConnectionString=$cosmosDbConnString -e RabbitMQSettings__Host=rabbitmq --network dc-mongo-rmq_default ssp-inventoryapi:latest
+```
+
+#### 4.2.3. With Azure CosmosDB and Azure Service Bus
+
+```powershell
+$cosmosDbConnString="[Azure Cosmos DB CONN STRING HERE]"
+$serviceBusConnString="[CONN STRING HERE]"
+
+docker run -it --rm -d -p 5006:5006 --name ssp-tradingapi -e MongoDbSettings__ConnectionString=$cosmosDbConnString -e ServiceBusSettings__ConnectionString=$serviceBusConnString -e ServiceSettings__MessageBroker="SERVICEBUS" --network dc-mongo-rmq_default ssp-inventoryapi:latest
 ```
