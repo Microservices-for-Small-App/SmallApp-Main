@@ -156,7 +156,7 @@ docker run -it --rm -d -p 5006:5006 --name ssp-tradingapi -e MongoDbSettings__Ho
 ```powershell
 $cosmosDbConnString="[Azure Cosmos DB CONN STRING HERE]"
 
-docker run -it --rm -d -p 5006:5006 --name ssp-tradingapi -e MongoDbSettings__ConnectionString=$cosmosDbConnString -e RabbitMQSettings__Host=rabbitmq --network dc-mongo-rmq_default ssp-inventoryapi:latest
+docker run -it --rm -d -p 5006:5006 --name ssp-tradingapi -e MongoDbSettings__ConnectionString=$cosmosDbConnString -e RabbitMQSettings__Host=rabbitmq --network dc-mongo-rmq_default ssp-tradingapi:latest
 ```
 
 #### 4.2.3. With Azure CosmosDB and Azure Service Bus
@@ -166,7 +166,7 @@ $cosmosDbConnString="[Azure Cosmos DB CONN STRING HERE]"
 $serviceBusConnString="[CONN STRING HERE]"
 $messageBroker="SERVICEBUS" # SERVICEBUS or RABBITMQ
 
-docker run -it --rm -d -p 5006:5006 --name ssp-tradingapi -e MongoDbSettings__ConnectionString=$cosmosDbConnString -e ServiceBusSettings__ConnectionString=$serviceBusConnString -e ServiceSettings__MessageBroker=$messageBroker --network dc-mongo-rmq_default ssp-inventoryapi:latest
+docker run -it --rm -d -p 5006:5006 --name ssp-tradingapi -e MongoDbSettings__ConnectionString=$cosmosDbConnString -e ServiceBusSettings__ConnectionString=$serviceBusConnString -e ServiceSettings__MessageBroker=$messageBroker --network dc-mongo-rmq_default ssp-tradingapi:latest
 ```
 
 ![Run Docker Container Locally |150x150](./Images/Dockerize/Run_Container_Locally_Trading.PNG)
