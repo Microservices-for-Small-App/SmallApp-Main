@@ -61,6 +61,8 @@ cd C:\LordKrishna\SSP\Services-Catalog
 docker build --secret id=GH_OWNER --secret id=GH_PAT --pull --rm -f "./src/Catalog.API/Prod.Dockerfile" -t ssp-catalogapi:$(Get-Date -Format yyyyMMddHHmmssfff) -t ssp-catalogapi:latest .
 ```
 
+![Build Docker Image Locally |150x150](./Images/Dockerize/Build_Image_Locally_Catalog.PNG)
+
 ### 2.2. Execute the below mentioned Docker Command(s) in PowerShell Windows Terminal to **RUN** Docker Container
 
 #### 2.2.1. With Local MongoDB and RabbitMQ
@@ -86,6 +88,8 @@ $messageBroker="SERVICEBUS" # SERVICEBUS or RABBITMQ
 
 docker run -it --rm -d -p 5000:5000 --name ssp-catalogapi -e MongoDbSettings__ConnectionString=$cosmosDbConnString -e ServiceBusSettings__ConnectionString=$serviceBusConnString -e ServiceSettings__MessageBroker=$messageBroker --network dc-mongo-rmq_default ssp-catalogapi:latest
 ```
+
+![Run Docker Container Locally |150x150](./Images/Dockerize/Run_Container_Locally_Catalog.PNG)
 
 ## 3. Inventory.API
 
