@@ -1,4 +1,4 @@
-# Docikerize your microservices
+# Publish Dociker Images to Azure Container Registry of your microservices
 
 ## 1. Build the Docker Image using Docker CLI and PowerShell
 
