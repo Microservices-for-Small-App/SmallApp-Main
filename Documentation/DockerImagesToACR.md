@@ -1,4 +1,4 @@
-# Docikerize your microservices
+# Publish Dociker Images to Azure Container Registry of your microservices
 
 ## 1. Build the Docker Image using Docker CLI and PowerShell
 
@@ -50,6 +50,21 @@ docker run -it --rm -d -p 5002:5002 --name ssp-identity -e MongoDbSettings__Conn
 ```
 
 ![Run Docker Container Locally |150x150](./Images/Dockerize/Run_Container_Locally_Identity.PNG)
+
+### 1.4. Publishing the Docker image to ACR
+
+```powershell
+$acrappname="acrplayeconomydev001"
+$identityimage="ssp-identityservice:latest"
+
+az acr login --name $acrappname
+
+docker tag $identityimage "$acrappname.azurecr.io/$identityimage"
+
+docker push "$acrappname.azurecr.io/$identityimage"
+```
+
+![Push Identity Docker Image To ACR | 150x150](./Images/DockerImagesToACR/PushDockerImageToACR_Identity.PNG)
 
 ## 2. Catalog.API
 
