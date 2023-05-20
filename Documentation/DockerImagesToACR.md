@@ -70,6 +70,8 @@ docker push "$acrappname.azurecr.io/$identityImageLatest"
 
 ![Push Identity Docker Image To ACR | 150x150](./Images/DockerImagesToACR/PushDockerImageToACR_Identity.PNG)
 
+![Docker Identity Images In ACR | 150x150](./Images/DockerImagesToACR/DockerImages_In_ACR_Identity.PNG)
+
 ## 2. Catalog.API
 
 ### 2.1. Execute the below mentioned Docker Command(s) in PowerShell Windows Terminal to **CREATE** the Docker Image
