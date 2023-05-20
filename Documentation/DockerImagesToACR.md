@@ -14,10 +14,10 @@ $env:GH_PAT="ghp_Your_GitHib_Classic_PAT"
 ```powershell
 cd C:\LordKrishna\SSP\Services-PlayIdentity
 
-$identityImageName="ssp-identityservice"
+$identityImageVersionTag="ssp-identityservice:$(Get-Date -Format yyyyMMddHHmmssfff)"
 $identityImageLatest="ssp-identityservice:latest"
 
-docker build --secret id=GH_OWNER --secret id=GH_PAT --pull --rm -f "./Src/Identity.Service/Prod.Dockerfile" -t $identityImageName:$(Get-Date -Format yyyyMMddHHmmssfff) -t $identityImageLatest .
+docker build --secret id=GH_OWNER --secret id=GH_PAT --pull --rm -f "./Src/Identity.Service/Prod.Dockerfile" -t $identityImageVersionTag -t $identityImageLatest .
 ```
 
 ![Build Docker Image Locally |150x150](./Images/Dockerize/Build_Image_Locally_Identity.PNG)
@@ -58,12 +58,13 @@ docker run -it --rm -d -p 5002:5002 --name ssp-identity -e MongoDbSettings__Conn
 
 ```powershell
 $acrappname="acrplayeconomydev001"
-$versionTag = $(Get-Date -Format yyyyMMddHHmmssfff)
 
 az acr login --name $acrappname
 
-docker tag $identityImageLatest "$acrappname.azurecr.io/$identityImageLatest"
+docker tag $identityImageVersionTag "$acrappname.azurecr.io/$identityImageVersionTag"
+docker push "$acrappname.azurecr.io/$identityImageVersionTag"
 
+docker tag $identityImageLatest "$acrappname.azurecr.io/$identityImageLatest"
 docker push "$acrappname.azurecr.io/$identityImageLatest"
 ```
 
