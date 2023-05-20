@@ -14,7 +14,10 @@ $env:GH_PAT="ghp_Your_GitHib_Classic_PAT"
 ```powershell
 cd C:\LordKrishna\SSP\Services-PlayIdentity
 
-docker build --secret id=GH_OWNER --secret id=GH_PAT --pull --rm -f "./Src/Identity.Service/Prod.Dockerfile" -t ssp-identityservice:$(Get-Date -Format yyyyMMddHHmmssfff) -t ssp-identityservice:latest .
+$identityImageName="ssp-identityservice"
+$identityImageLatest="ssp-identityservice:latest"
+
+docker build --secret id=GH_OWNER --secret id=GH_PAT --pull --rm -f "./Src/Identity.Service/Prod.Dockerfile" -t $identityImageName:$(Get-Date -Format yyyyMMddHHmmssfff) -t $identityImageLatest .
 ```
 
 ![Build Docker Image Locally |150x150](./Images/Dockerize/Build_Image_Locally_Identity.PNG)
@@ -26,7 +29,7 @@ docker build --secret id=GH_OWNER --secret id=GH_PAT --pull --rm -f "./Src/Ident
 ```powershell
 $adminPass="Sample@123$"
 
-docker run -it --rm -d -p 5002:5002 --name ssp-identity -e MongoDbSettings__Host=mongo -e RabbitMQSettings__Host=rabbitmq -e IdentitySettings__AdminUserPassword=$adminPass --network dc-mongo-rmq_default ssp-identityservice:latest
+docker run -it --rm -d -p 5002:5002 --name ssp-identity -e MongoDbSettings__Host=mongo -e RabbitMQSettings__Host=rabbitmq -e IdentitySettings__AdminUserPassword=$adminPass --network dc-mongo-rmq_default $identityImageLatest
 ```
 
 #### 1.3.2. With Azure CosmosDB and Local RabbitMQ
@@ -35,7 +38,7 @@ docker run -it --rm -d -p 5002:5002 --name ssp-identity -e MongoDbSettings__Host
 $adminPass="Sample@123$"
 $cosmosDbConnString="[Azure Cosmos DB CONN STRING HERE]"
 
-docker run -it --rm -d -p 5002:5002 --name ssp-identity -e MongoDbSettings__ConnectionString=$cosmosDbConnString -e RabbitMQSettings__Host=rabbitmq -e IdentitySettings__AdminUserPassword=$adminPass --network dc-mongo-rmq_default ssp-identityservice:latest
+docker run -it --rm -d -p 5002:5002 --name ssp-identity -e MongoDbSettings__ConnectionString=$cosmosDbConnString -e RabbitMQSettings__Host=rabbitmq -e IdentitySettings__AdminUserPassword=$adminPass --network dc-mongo-rmq_default $identityImageLatest
 ```
 
 #### 1.3.3. With Azure CosmosDB and Azure Service Bus
@@ -46,7 +49,7 @@ $cosmosDbConnString="[Azure Cosmos DB CONN STRING HERE]"
 $serviceBusConnString="[CONN STRING HERE]"
 $messageBroker="SERVICEBUS" # SERVICEBUS or RABBITMQ
 
-docker run -it --rm -d -p 5002:5002 --name ssp-identity -e MongoDbSettings__ConnectionString=$cosmosDbConnString -e ServiceBusSettings__ConnectionString=$serviceBusConnString -e ServiceSettings__MessageBroker=$messageBroker -e IdentitySettings__AdminUserPassword=$adminPass --network dc-mongo-rmq_default ssp-identityservice:latest
+docker run -it --rm -d -p 5002:5002 --name ssp-identity -e MongoDbSettings__ConnectionString=$cosmosDbConnString -e ServiceBusSettings__ConnectionString=$serviceBusConnString -e ServiceSettings__MessageBroker=$messageBroker -e IdentitySettings__AdminUserPassword=$adminPass --network dc-mongo-rmq_default $identityImageLatest
 ```
 
 ![Run Docker Container Locally |150x150](./Images/Dockerize/Run_Container_Locally_Identity.PNG)
@@ -55,13 +58,13 @@ docker run -it --rm -d -p 5002:5002 --name ssp-identity -e MongoDbSettings__Conn
 
 ```powershell
 $acrappname="acrplayeconomydev001"
-$identityimage="ssp-identityservice:latest"
+$versionTag = $(Get-Date -Format yyyyMMddHHmmssfff)
 
 az acr login --name $acrappname
 
-docker tag $identityimage "$acrappname.azurecr.io/$identityimage"
+docker tag $identityImageLatest "$acrappname.azurecr.io/$identityImageLatest"
 
-docker push "$acrappname.azurecr.io/$identityimage"
+docker push "$acrappname.azurecr.io/$identityImageLatest"
 ```
 
 ![Push Identity Docker Image To ACR | 150x150](./Images/DockerImagesToACR/PushDockerImageToACR_Identity.PNG)
