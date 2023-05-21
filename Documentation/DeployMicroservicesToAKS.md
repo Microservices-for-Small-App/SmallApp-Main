@@ -17,5 +17,5 @@ $aksname="aks-playeconomy-dev-001"
 
 az aks create -n $aksname -g $rgname --node-vm-size Standard_B2s --node-count 2 --attach-acr $acrname --enable-oidc-issuer --enable-workload-identity --generate-ssh-keys
 
-az aks get-credentials --name $appname --resource-group $appname
+az aks get-credentials --name $aksname --resource-group $rgname
 ```
