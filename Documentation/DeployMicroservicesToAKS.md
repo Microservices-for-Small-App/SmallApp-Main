@@ -45,10 +45,10 @@ kubectl get secrets -n $namespace
 kubectl apply -f .\K8s\identity.yaml -n $namespace
 
 kubectl get pods -n $namespace
-
 kubectl logs PodName -n $namespace
-
 kubectl describe pod PodName -n $namespace
+
+kubectl get services -n $namespace
 ```
 
 ## Few commands to manage the AKS cluster
