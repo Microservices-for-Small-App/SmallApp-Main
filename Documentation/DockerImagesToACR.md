@@ -54,18 +54,19 @@ docker run -it --rm -d -p 5002:5002 --name ssp-identity -e MongoDbSettings__Conn
 
 ![Run Docker Container Locally |150x150](./Images/Dockerize/Run_Container_Locally_Identity.PNG)
 
-### 1.4. Publishing the Docker image to ACR
+### 1.4. Publishing the Identity Docker image to ACR
 
 ```powershell
 $acrappname="acrplayeconomydev001"
-
 az acr login --name $acrappname
 
-docker tag $identityImageVersionTag "$acrappname.azurecr.io/$identityImageVersionTag"
-docker push "$acrappname.azurecr.io/$identityImageVersionTag"
+$identityAcrVersionTag = "$acrappname.azurecr.io/$identityImageVersionTag"
+docker tag $identityImageVersionTag $identityAcrVersionTag
+docker push $identityAcrVersionTag
 
-docker tag $identityImageLatest "$acrappname.azurecr.io/$identityImageLatest"
-docker push "$acrappname.azurecr.io/$identityImageLatest"
+$identityAcrLatest = "$acrappname.azurecr.io/$identityImageLatest"
+docker tag $identityImageLatest $identityAcrLatest
+docker push $identityAcrLatest
 ```
 
 ![Push Identity Docker Image To ACR | 150x150](./Images/DockerImagesToACR/PushDockerImageToACR_Identity.PNG)
@@ -79,7 +80,10 @@ docker push "$acrappname.azurecr.io/$identityImageLatest"
 ```powershell
 cd C:\LordKrishna\SSP\Services-Catalog
 
-docker build --secret id=GH_OWNER --secret id=GH_PAT --pull --rm -f "./src/Catalog.API/Prod.Dockerfile" -t ssp-catalogapi:$(Get-Date -Format yyyyMMddHHmmssfff) -t ssp-catalogapi:latest .
+$catalogapiImageVersionTag="ssp-catalogapi:$(Get-Date -Format yyyyMMddHHmmssfff)"
+$catalogapiImageLatest="ssp-catalogapi:latest"
+
+docker build --secret id=GH_OWNER --secret id=GH_PAT --pull --rm -f "./src/Catalog.API/Prod.Dockerfile" -t $catalogapiImageVersionTag -t $catalogapiImageLatest .
 ```
 
 ![Build Docker Image Locally |150x150](./Images/Dockerize/Build_Image_Locally_Catalog.PNG)
@@ -89,7 +93,7 @@ docker build --secret id=GH_OWNER --secret id=GH_PAT --pull --rm -f "./src/Catal
 #### 2.2.1. With Local MongoDB and RabbitMQ
 
 ```powershell
-docker run -it --rm -d -p 5000:5000 --name ssp-catalogapi -e MongoDbSettings__Host=mongo -e RabbitMQSettings__Host=rabbitmq --network dc-mongo-rmq_default ssp-catalogapi:latest
+docker run -it --rm -d -p 5000:5000 --name ssp-catalogapi -e MongoDbSettings__Host=mongo -e RabbitMQSettings__Host=rabbitmq --network dc-mongo-rmq_default $catalogapiImageLatest
 ```
 
 #### 2.2.2. With Azure CosmosDB and Local RabbitMQ
@@ -97,7 +101,7 @@ docker run -it --rm -d -p 5000:5000 --name ssp-catalogapi -e MongoDbSettings__Ho
 ```powershell
 $cosmosDbConnString="[Azure Cosmos DB CONN STRING HERE]"
 
-docker run -it --rm -d -p 5000:5000 --name ssp-catalogapi -e MongoDbSettings__ConnectionString=$cosmosDbConnString -e RabbitMQSettings__Host=rabbitmq --network dc-mongo-rmq_default ssp-catalogapi:latest
+docker run -it --rm -d -p 5000:5000 --name ssp-catalogapi -e MongoDbSettings__ConnectionString=$cosmosDbConnString -e RabbitMQSettings__Host=rabbitmq --network dc-mongo-rmq_default $catalogapiImageLatest
 ```
 
 #### 2.2.3. With Azure CosmosDB and Azure Service Bus
@@ -107,10 +111,29 @@ $cosmosDbConnString="[Azure Cosmos DB CONN STRING HERE]"
 $serviceBusConnString="[CONN STRING HERE]"
 $messageBroker="SERVICEBUS" # SERVICEBUS or RABBITMQ
 
-docker run -it --rm -d -p 5000:5000 --name ssp-catalogapi -e MongoDbSettings__ConnectionString=$cosmosDbConnString -e ServiceBusSettings__ConnectionString=$serviceBusConnString -e ServiceSettings__MessageBroker=$messageBroker --network dc-mongo-rmq_default ssp-catalogapi:latest
+docker run -it --rm -d -p 5000:5000 --name ssp-catalogapi -e MongoDbSettings__ConnectionString=$cosmosDbConnString -e ServiceBusSettings__ConnectionString=$serviceBusConnString -e ServiceSettings__MessageBroker=$messageBroker --network dc-mongo-rmq_default $catalogapiImageLatest
 ```
 
 ![Run Docker Container Locally |150x150](./Images/Dockerize/Run_Container_Locally_Catalog.PNG)
+
+### 2.4. Publishing the Catalog API Docker image to ACR
+
+```powershell
+$acrappname="acrplayeconomydev001"
+az acr login --name $acrappname
+
+$catalogapiAcrVersionTag = "$acrappname.azurecr.io/$catalogapiImageVersionTag"
+docker tag $catalogapiImageVersionTag $catalogapiAcrVersionTag
+docker push $catalogapiAcrVersionTag
+
+$catalogapiAcrLatest = "$acrappname.azurecr.io/$catalogapiImageLatest"
+docker tag $catalogapiImageLatest $catalogapiAcrLatest
+docker push $catalogapiAcrLatest
+```
+
+![Push Identity Docker Image To ACR | 150x150](./Images/DockerImagesToACR/PushDockerImageToACR_Identity.PNG)
+
+![Docker Identity Images In ACR | 150x150](./Images/DockerImagesToACR/DockerImages_In_ACR_Identity.PNG)
 
 ## 3. Inventory.API
 
