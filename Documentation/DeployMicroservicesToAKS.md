@@ -35,6 +35,8 @@ $cosmosDbConnString="[Azure Cosmos DB CONN STRING HERE]"
 $serviceBusConnString="[CONN STRING HERE]"
 
 kubectl create secret generic identity-secrets --from-literal=cosmosdb-connectionstring=$cosmosDbConnString --from-literal=servicebus-connectionstring=$serviceBusConnString --from-literal=admin-password=$adminPass -n $namespace
+
+kubectl get secrets -n $namespace
 ```
 
 ## Few commands to manage the AKS cluster
@@ -45,6 +47,8 @@ az aks get-credentials --name $aksname --resource-group $rgname
 kubectl version
 
 kubectl cluster-info
+
+kubectl get secret  -o wide
 
 az aks browse --name $aksname --resource-group $rgname
 
