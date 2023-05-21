@@ -19,3 +19,39 @@ az aks create -n $aksname -g $rgname --node-vm-size Standard_B2s --node-count 2 
 
 az aks get-credentials --name $aksname --resource-group $rgname
 ```
+
+## Few commands to manage the AKS cluster
+
+```powershell
+az aks get-credentials --name $aksname --resource-group $rgname
+
+kubectl version
+
+kubectl cluster-info
+
+az aks browse --name $aksname --resource-group $rgname
+
+az aks scale --name $aksname --resource-group $rgname --node-count 3
+
+az aks nodepool add --resource-group $rgname --cluster-name $aksname --name nodepool2 --node-count 1 --node-vm-size Standard_B2s --labels service=backend
+
+az aks nodepool delete --resource-group $rgname --cluster-name $aksname --name nodepool2
+
+az aks nodepool list --resource-group $rgname --cluster-name $aksname -o table
+
+az aks nodepool scale --resource-group $rgname --cluster-name $aksname --name nodepool1 --node-count 3
+
+az aks nodepool update --resource-group $rgname --cluster-name $aksname --name nodepool1 --labels service=backend
+
+az aks nodepool upgrade --resource-group $rgname --cluster-name $aksname --name nodepool1 --kubernetes-version 1.19.11
+
+az aks nodepool show --resource-group $rgname --cluster-name $aksname --name nodepool1
+
+az aks nodepool get-upgrades --resource-group $rgname --cluster-name $aksname --nodepool-name nodepool1
+
+az aks nodepool upgrade --resource-group $rgname --cluster-name $aksname --nodepool-name nodepool1 --kubernetes-version 1.20.7
+
+az aks nodepool upgrade --resource-group $rgname --cluster-name $aksname --nodepool-name nodepool1 --kubernetes-version 1.21.1
+
+az aks nodepool upgrade --resource-group $rgname --cluster-name $aksname --nodepool-name nodepool1 --kubernetes-version 1.21.2
+```
