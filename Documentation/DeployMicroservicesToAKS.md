@@ -20,6 +20,23 @@ az aks create -n $aksname -g $rgname --node-vm-size Standard_B2s --node-count 2 
 az aks get-credentials --name $aksname --resource-group $rgname
 ```
 
+## Create the Kubernetes namespace
+
+```powershell
+$namespace="identityservice"
+kubectl create namespace $namespace
+```
+
+## Create the Kubernetes secrets
+
+```powershell
+$adminPass="Sample@123$"
+$cosmosDbConnString="[Azure Cosmos DB CONN STRING HERE]"
+$serviceBusConnString="[CONN STRING HERE]"
+
+kubectl create secret generic identity-secrets --from-literal=cosmosdb-connectionstring=$cosmosDbConnString --from-literal=servicebus-connectionstring=$serviceBusConnString --from-literal=admin-password=$adminPass -n $namespace
+```
+
 ## Few commands to manage the AKS cluster
 
 ```powershell
