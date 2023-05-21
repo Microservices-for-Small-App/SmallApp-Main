@@ -58,7 +58,6 @@ docker run -it --rm -d -p 5002:5002 --name ssp-identity -e MongoDbSettings__Conn
 
 ```powershell
 $acrappname="acrplayeconomydev001"
-
 az acr login --name $acrappname
 
 $identityAcrVersionTag = "$acrappname.azurecr.io/$identityImageVersionTag"
@@ -121,7 +120,6 @@ docker run -it --rm -d -p 5000:5000 --name ssp-catalogapi -e MongoDbSettings__Co
 
 ```powershell
 $acrappname="acrplayeconomydev001"
-
 az acr login --name $acrappname
 
 $catalogapiAcrVersionTag = "$acrappname.azurecr.io/$catalogapiImageVersionTag"
