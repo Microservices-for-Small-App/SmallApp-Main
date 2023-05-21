@@ -61,11 +61,13 @@ $acrappname="acrplayeconomydev001"
 
 az acr login --name $acrappname
 
-docker tag $identityImageVersionTag "$acrappname.azurecr.io/$identityImageVersionTag"
-docker push "$acrappname.azurecr.io/$identityImageVersionTag"
+$identityAcrVersionTag = "$acrappname.azurecr.io/$identityImageVersionTag"
+docker tag $identityImageVersionTag $identityAcrVersionTag
+docker push $identityAcrVersionTag
 
-docker tag $identityImageLatest "$acrappname.azurecr.io/$identityImageLatest"
-docker push "$acrappname.azurecr.io/$identityImageLatest"
+$identityAcrLatest = "$acrappname.azurecr.io/$identityImageLatest"
+docker tag $identityImageLatest $identityAcrLatest
+docker push $identityAcrLatest
 ```
 
 ![Push Identity Docker Image To ACR | 150x150](./Images/DockerImagesToACR/PushDockerImageToACR_Identity.PNG)
