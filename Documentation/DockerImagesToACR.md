@@ -75,7 +75,14 @@ docker push $identityAcrLatest
 
 ## 2. Catalog.API
 
-### 2.1. Execute the below mentioned Docker Command(s) in PowerShell Windows Terminal to **CREATE** the Docker Image
+### 2.1. Export required Variables using PowerShell Windows Terminal
+
+```powershell
+$env:GH_OWNER="Microservices-for-Small-App"
+$env:GH_PAT="ghp_Your_GitHib_Classic_PAT"
+```
+
+### 2.2. Execute the below mentioned Docker Command(s) in PowerShell Windows Terminal to **CREATE** the Docker Image
 
 ```powershell
 cd C:\LordKrishna\SSP\Services-Catalog
@@ -88,15 +95,15 @@ docker build --secret id=GH_OWNER --secret id=GH_PAT --pull --rm -f "./src/Catal
 
 ![Build Docker Image Locally |150x150](./Images/Dockerize/Build_Image_Locally_Catalog.PNG)
 
-### 2.2. Execute the below mentioned Docker Command(s) in PowerShell Windows Terminal to **RUN** Docker Container
+### 2.3. Execute the below mentioned Docker Command(s) in PowerShell Windows Terminal to **RUN** Docker Container
 
-#### 2.2.1. With Local MongoDB and RabbitMQ
+#### 2.3.1. With Local MongoDB and RabbitMQ
 
 ```powershell
 docker run -it --rm -d -p 5000:5000 --name ssp-catalogapi -e MongoDbSettings__Host=mongo -e RabbitMQSettings__Host=rabbitmq --network dc-mongo-rmq_default $catalogapiImageLatest
 ```
 
-#### 2.2.2. With Azure CosmosDB and Local RabbitMQ
+#### 2.3.2. With Azure CosmosDB and Local RabbitMQ
 
 ```powershell
 $cosmosDbConnString="[Azure Cosmos DB CONN STRING HERE]"
@@ -104,7 +111,7 @@ $cosmosDbConnString="[Azure Cosmos DB CONN STRING HERE]"
 docker run -it --rm -d -p 5000:5000 --name ssp-catalogapi -e MongoDbSettings__ConnectionString=$cosmosDbConnString -e RabbitMQSettings__Host=rabbitmq --network dc-mongo-rmq_default $catalogapiImageLatest
 ```
 
-#### 2.2.3. With Azure CosmosDB and Azure Service Bus
+#### 2.3.3. With Azure CosmosDB and Azure Service Bus
 
 ```powershell
 $cosmosDbConnString="[Azure Cosmos DB CONN STRING HERE]"
