@@ -213,7 +213,14 @@ docker push $inventoryapiAcrLatest
 
 ## 4. Trading.API
 
-### 4.1. Execute the below mentioned Docker Command(s) in PowerShell Windows Terminal to **CREATE** the Docker Image
+### 4.1. Export required Variables using PowerShell Windows Terminal
+
+```powershell
+$env:GH_OWNER="Microservices-for-Small-App"
+$env:GH_PAT="ghp_Your_GitHib_Classic_PAT"
+```
+
+### 4.2. Execute the below mentioned Docker Command(s) in PowerShell Windows Terminal to **CREATE** the Docker Image
 
 ```powershell
 cd C:\LordKrishna\SSP\Services-Trading
@@ -223,15 +230,15 @@ docker build --secret id=GH_OWNER --secret id=GH_PAT --pull --rm -f "./src/Tradi
 
 ![Build Docker Image Locally |150x150](./Images/Dockerize/Build_Image_Locally_Trading.PNG)
 
-### 4.2. Execute the below mentioned Docker Command(s) in PowerShell Windows Terminal to **RUN** Docker Container
+### 4.3. Execute the below mentioned Docker Command(s) in PowerShell Windows Terminal to **RUN** Docker Container
 
-#### 4.2.1. With Local MongoDB and RabbitMQ
+#### 4.3.1. With Local MongoDB and RabbitMQ
 
 ```powershell
 docker run -it --rm -d -p 5006:5006 --name ssp-tradingapi -e MongoDbSettings__Host=mongo -e RabbitMQSettings__Host=rabbitmq --network dc-mongo-rmq_default ssp-tradingapi:latest
 ```
 
-#### 4.2.2. With Azure CosmosDB and Local RabbitMQ
+#### 4.3.2. With Azure CosmosDB and Local RabbitMQ
 
 ```powershell
 $cosmosDbConnString="[Azure Cosmos DB CONN STRING HERE]"
@@ -239,7 +246,7 @@ $cosmosDbConnString="[Azure Cosmos DB CONN STRING HERE]"
 docker run -it --rm -d -p 5006:5006 --name ssp-tradingapi -e MongoDbSettings__ConnectionString=$cosmosDbConnString -e RabbitMQSettings__Host=rabbitmq --network dc-mongo-rmq_default ssp-tradingapi:latest
 ```
 
-#### 4.2.3. With Azure CosmosDB and Azure Service Bus
+#### 4.3.3. With Azure CosmosDB and Azure Service Bus
 
 ```powershell
 $cosmosDbConnString="[Azure Cosmos DB CONN STRING HERE]"
@@ -250,3 +257,22 @@ docker run -it --rm -d -p 5006:5006 --name ssp-tradingapi -e MongoDbSettings__Co
 ```
 
 ![Run Docker Container Locally |150x150](./Images/Dockerize/Run_Container_Locally_Trading.PNG)
+
+### 4.4. Publishing the Trading API Docker image to ACR
+
+```powershell
+$acrappname="acrplayeconomydev001"
+az acr login --name $acrappname
+
+$identityAcrVersionTag = "$acrappname.azurecr.io/$identityImageVersionTag"
+docker tag $identityImageVersionTag $identityAcrVersionTag
+docker push $identityAcrVersionTag
+
+$identityAcrLatest = "$acrappname.azurecr.io/$identityImageLatest"
+docker tag $identityImageLatest $identityAcrLatest
+docker push $identityAcrLatest
+```
+
+![Push Identity Docker Image To ACR | 150x150](./Images/DockerImagesToACR/Identity_DockerImage_ToACR.PNG)
+
+![Docker Identity Images In ACR | 150x150](./Images/DockerImagesToACR/Identity_DockerImage_InACR.PNG)
