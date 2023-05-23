@@ -131,9 +131,9 @@ docker tag $catalogapiImageLatest $catalogapiAcrLatest
 docker push $catalogapiAcrLatest
 ```
 
-![Push Identity Docker Image To ACR | 150x150](./Images/DockerImagesToACR/CatalogApi_DockerImage_ToACR.PNG)
+![Push Catalog API Docker Image To ACR | 150x150](./Images/DockerImagesToACR/CatalogApi_DockerImage_ToACR.PNG)
 
-![Docker Identity Images In ACR | 150x150](./Images/DockerImagesToACR/CatalogApi_DockerImage_InACR.PNG)
+![Docker Catalog API Images In ACR | 150x150](./Images/DockerImagesToACR/CatalogApi_DockerImage_InACR.PNG)
 
 ## 3. Inventory.API
 
@@ -177,6 +177,25 @@ docker run -it --rm -d -p 5004:5004 --name ssp-inventoryapi -e MongoDbSettings__
 ```
 
 ![Run Docker Container Locally |150x150](./Images/Dockerize/Run_Container_Locally_Inventory.PNG)
+
+### 3.4. Publishing the Inventory Api Docker image to ACR
+
+```powershell
+$acrappname="acrplayeconomydev001"
+az acr login --name $acrappname
+
+$inventoryapiAcrVersionTag = "$acrappname.azurecr.io/$inventoryapiImageVersionTag"
+docker tag $inventoryapiImageVersionTag $inventoryapiAcrVersionTag
+docker push $inventoryapiAcrVersionTag
+
+$inventoryapiAcrLatest = "$acrappname.azurecr.io/$inventoryapiImageLatest"
+docker tag $inventoryapiImageLatest $inventoryapiAcrLatest
+docker push $inventoryapiAcrLatest
+```
+
+![Push Inventory API Docker Image To ACR | 150x150](./Images/DockerImagesToACR/InventoryApi_DockerImage_ToACR.PNG)
+
+![Docker Inventory API Images In ACR | 150x150](./Images/DockerImagesToACR/InventoryApi_DockerImage_InACR.PNG)
 
 ## 4. Trading.API
 
