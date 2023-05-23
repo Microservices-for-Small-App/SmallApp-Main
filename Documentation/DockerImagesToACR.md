@@ -69,9 +69,9 @@ docker tag $identityImageLatest $identityAcrLatest
 docker push $identityAcrLatest
 ```
 
-![Push Identity Docker Image To ACR | 150x150](./Images/DockerImagesToACR/PushDockerImageToACR_Identity.PNG)
+![Push Identity Docker Image To ACR | 150x150](./Images/DockerImagesToACR/Identity_DockerImage_ToACR.PNG)
 
-![Docker Identity Images In ACR | 150x150](./Images/DockerImagesToACR/DockerImages_In_ACR_Identity.PNG)
+![Docker Identity Images In ACR | 150x150](./Images/DockerImagesToACR/Identity_DockerImage_InACR.PNG)
 
 ## 2. Catalog.API
 
