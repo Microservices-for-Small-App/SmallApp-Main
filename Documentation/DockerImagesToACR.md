@@ -142,7 +142,10 @@ docker push $catalogapiAcrLatest
 ```powershell
 cd C:\LordKrishna\SSP\Services-Inventory
 
-docker build --secret id=GH_OWNER --secret id=GH_PAT --pull --rm -f "./src/Inventory.API/Prod.Dockerfile" -t ssp-inventoryapi:$(Get-Date -Format yyyyMMddHHmmssfff) -t ssp-inventoryapi:latest .
+$inventoryapiImageVersionTag="ssp-inventoryapi:$(Get-Date -Format yyyyMMddHHmmssfff)"
+$inventoryapiImageLatest="ssp-inventoryapi:latest"
+
+docker build --secret id=GH_OWNER --secret id=GH_PAT --pull --rm -f "./src/Inventory.API/Prod.Dockerfile" -t $inventoryapiImageVersionTag -t $inventoryapiImageLatest .
 ```
 
 ![Build Docker Image Locally |150x150](./Images/Dockerize/Build_Image_Locally_Inventory.PNG)
@@ -152,7 +155,7 @@ docker build --secret id=GH_OWNER --secret id=GH_PAT --pull --rm -f "./src/Inven
 #### 3.2.1. With Local MongoDB and RabbitMQ
 
 ```powershell
-docker run -it --rm -d -p 5004:5004 --name ssp-inventoryapi -e MongoDbSettings__Host=mongo -e RabbitMQSettings__Host=rabbitmq --network dc-mongo-rmq_default ssp-inventoryapi:latest
+docker run -it --rm -d -p 5004:5004 --name ssp-inventoryapi -e MongoDbSettings__Host=mongo -e RabbitMQSettings__Host=rabbitmq --network dc-mongo-rmq_default $inventoryapiImageLatest
 ```
 
 #### 3.2.2. With Azure CosmosDB and Local RabbitMQ
@@ -160,7 +163,7 @@ docker run -it --rm -d -p 5004:5004 --name ssp-inventoryapi -e MongoDbSettings__
 ```powershell
 $cosmosDbConnString="[Azure Cosmos DB CONN STRING HERE]"
 
-docker run -it --rm -d -p 5004:5004 --name ssp-inventoryapi -e MongoDbSettings__ConnectionString=$cosmosDbConnString -e RabbitMQSettings__Host=rabbitmq --network dc-mongo-rmq_default ssp-inventoryapi:latest
+docker run -it --rm -d -p 5004:5004 --name ssp-inventoryapi -e MongoDbSettings__ConnectionString=$cosmosDbConnString -e RabbitMQSettings__Host=rabbitmq --network dc-mongo-rmq_default $inventoryapiImageLatest
 ```
 
 #### 3.2.3. With Azure CosmosDB and Azure Service Bus
@@ -170,7 +173,7 @@ $cosmosDbConnString="[Azure Cosmos DB CONN STRING HERE]"
 $serviceBusConnString="[CONN STRING HERE]"
 $messageBroker="SERVICEBUS" # SERVICEBUS or RABBITMQ
 
-docker run -it --rm -d -p 5004:5004 --name ssp-inventoryapi -e MongoDbSettings__ConnectionString=$cosmosDbConnString -e ServiceBusSettings__ConnectionString=$serviceBusConnString -e ServiceSettings__MessageBroker=$messageBroker --network dc-mongo-rmq_default ssp-inventoryapi:latest
+docker run -it --rm -d -p 5004:5004 --name ssp-inventoryapi -e MongoDbSettings__ConnectionString=$cosmosDbConnString -e ServiceBusSettings__ConnectionString=$serviceBusConnString -e ServiceSettings__MessageBroker=$messageBroker --network dc-mongo-rmq_default $inventoryapiImageLatest
 ```
 
 ![Run Docker Container Locally |150x150](./Images/Dockerize/Run_Container_Locally_Inventory.PNG)
