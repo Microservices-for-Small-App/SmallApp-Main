@@ -225,7 +225,10 @@ $env:GH_PAT="ghp_Your_GitHib_Classic_PAT"
 ```powershell
 cd C:\LordKrishna\SSP\Services-Trading
 
-docker build --secret id=GH_OWNER --secret id=GH_PAT --pull --rm -f "./src/Trading.API/Prod.Dockerfile" -t ssp-tradingapi:$(Get-Date -Format yyyyMMddHHmmssfff) -t ssp-tradingapi:latest .
+$tradingapiImageVersionTag="ssp-tradingapi:$(Get-Date -Format yyyyMMddHHmmssfff)"
+$tradingapiImageLatest="ssp-tradingapi:latest"
+
+docker build --secret id=GH_OWNER --secret id=GH_PAT --pull --rm -f "./src/Trading.API/Prod.Dockerfile" -t $tradingapiImageVersionTag -t $tradingapiImageLatest .
 ```
 
 ![Build Docker Image Locally |150x150](./Images/Dockerize/Build_Image_Locally_Trading.PNG)
@@ -235,7 +238,7 @@ docker build --secret id=GH_OWNER --secret id=GH_PAT --pull --rm -f "./src/Tradi
 #### 4.3.1. With Local MongoDB and RabbitMQ
 
 ```powershell
-docker run -it --rm -d -p 5006:5006 --name ssp-tradingapi -e MongoDbSettings__Host=mongo -e RabbitMQSettings__Host=rabbitmq --network dc-mongo-rmq_default ssp-tradingapi:latest
+docker run -it --rm -d -p 5006:5006 --name ssp-tradingapi -e MongoDbSettings__Host=mongo -e RabbitMQSettings__Host=rabbitmq --network dc-mongo-rmq_default $tradingapiImageLatest
 ```
 
 #### 4.3.2. With Azure CosmosDB and Local RabbitMQ
@@ -243,7 +246,7 @@ docker run -it --rm -d -p 5006:5006 --name ssp-tradingapi -e MongoDbSettings__Ho
 ```powershell
 $cosmosDbConnString="[Azure Cosmos DB CONN STRING HERE]"
 
-docker run -it --rm -d -p 5006:5006 --name ssp-tradingapi -e MongoDbSettings__ConnectionString=$cosmosDbConnString -e RabbitMQSettings__Host=rabbitmq --network dc-mongo-rmq_default ssp-tradingapi:latest
+docker run -it --rm -d -p 5006:5006 --name ssp-tradingapi -e MongoDbSettings__ConnectionString=$cosmosDbConnString -e RabbitMQSettings__Host=rabbitmq --network dc-mongo-rmq_default $tradingapiImageLatest
 ```
 
 #### 4.3.3. With Azure CosmosDB and Azure Service Bus
@@ -253,7 +256,7 @@ $cosmosDbConnString="[Azure Cosmos DB CONN STRING HERE]"
 $serviceBusConnString="[CONN STRING HERE]"
 $messageBroker="SERVICEBUS" # SERVICEBUS or RABBITMQ
 
-docker run -it --rm -d -p 5006:5006 --name ssp-tradingapi -e MongoDbSettings__ConnectionString=$cosmosDbConnString -e ServiceBusSettings__ConnectionString=$serviceBusConnString -e ServiceSettings__MessageBroker=$messageBroker --network dc-mongo-rmq_default ssp-tradingapi:latest
+docker run -it --rm -d -p 5006:5006 --name ssp-tradingapi -e MongoDbSettings__ConnectionString=$cosmosDbConnString -e ServiceBusSettings__ConnectionString=$serviceBusConnString -e ServiceSettings__MessageBroker=$messageBroker --network dc-mongo-rmq_default $tradingapiImageLatest
 ```
 
 ![Run Docker Container Locally |150x150](./Images/Dockerize/Run_Container_Locally_Trading.PNG)
@@ -264,13 +267,13 @@ docker run -it --rm -d -p 5006:5006 --name ssp-tradingapi -e MongoDbSettings__Co
 $acrappname="acrplayeconomydev001"
 az acr login --name $acrappname
 
-$identityAcrVersionTag = "$acrappname.azurecr.io/$identityImageVersionTag"
-docker tag $identityImageVersionTag $identityAcrVersionTag
+$tradingapiAcrVersionTag = "$acrappname.azurecr.io/$tradingapiImageVersionTag"
+docker tag $tradingapiImageVersionTag $tradingapiAcrVersionTag
 docker push $identityAcrVersionTag
 
-$identityAcrLatest = "$acrappname.azurecr.io/$identityImageLatest"
-docker tag $identityImageLatest $identityAcrLatest
-docker push $identityAcrLatest
+$tradingapiAcrLatest = "$acrappname.azurecr.io/$tradingapiImageLatest"
+docker tag $tradingapiImageLatest $tradingapiAcrLatest
+docker push $tradingapiAcrLatest
 ```
 
 ![Push Identity Docker Image To ACR | 150x150](./Images/DockerImagesToACR/Identity_DockerImage_ToACR.PNG)
