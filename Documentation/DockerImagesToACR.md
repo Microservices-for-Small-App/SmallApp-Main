@@ -269,13 +269,13 @@ az acr login --name $acrappname
 
 $tradingapiAcrVersionTag = "$acrappname.azurecr.io/$tradingapiImageVersionTag"
 docker tag $tradingapiImageVersionTag $tradingapiAcrVersionTag
-docker push $identityAcrVersionTag
+docker push $tradingapiAcrVersionTag
 
 $tradingapiAcrLatest = "$acrappname.azurecr.io/$tradingapiImageLatest"
 docker tag $tradingapiImageLatest $tradingapiAcrLatest
 docker push $tradingapiAcrLatest
 ```
 
-![Push Identity Docker Image To ACR | 150x150](./Images/DockerImagesToACR/Identity_DockerImage_ToACR.PNG)
+![Push Trading API Docker Image To ACR | 150x150](./Images/DockerImagesToACR/TradingApi_DockerImage_ToACR.PNG)
 
-![Docker Identity Images In ACR | 150x150](./Images/DockerImagesToACR/Identity_DockerImage_InACR.PNG)
+![Docker Trading API Images In ACR | 150x150](./Images/DockerImagesToACR/TradingApi_DockerImage_InACR.PNG)
