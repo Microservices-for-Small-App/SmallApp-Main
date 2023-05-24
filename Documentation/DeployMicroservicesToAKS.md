@@ -46,7 +46,10 @@ cd C:\LordKrishna\SSP\Services-PlayIdentity
 
 kubectl apply -f .\K8s\identity.yaml -n $namespace
 
+kubectl get events -n $namespace
+
 kubectl get pods -n $namespace
+kubectl get pods -o wide -n $namespace
 kubectl logs PodName -n $namespace
 kubectl describe pod PodName -n $namespace
 
