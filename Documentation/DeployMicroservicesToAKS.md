@@ -42,6 +42,8 @@ kubectl get secrets -n $namespace
 ## Create the Kubernetes pod
 
 ```powershell
+cd C:\LordKrishna\SSP\Services-PlayIdentity
+
 kubectl apply -f .\K8s\identity.yaml -n $namespace
 
 kubectl get pods -n $namespace
