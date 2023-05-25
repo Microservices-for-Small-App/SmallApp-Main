@@ -75,7 +75,7 @@ az keyvault set-policy -n $kvname --secret-permissions get list --spn $IDENTITY_
 ## Establish the federated identity credential
 
 ```powershell
-$AKS_OIDC_ISSUER=az aks show -n $appname -g $rgname --query "oidcIssuerProfile.issuerUrl" -otsv
+$AKS_OIDC_ISSUER=az aks show -n $aksname -g $rgname --query "oidcIssuerProfile.issuerUrl" -otsv
 
 az identity federated-credential create --name $namespace --identity-name $namespace --resource-group $appname --issuer $AKS_OIDC_ISSUER --subject "system:serviceaccount:${namespace}:${namespace}-serviceaccount"
 ```
