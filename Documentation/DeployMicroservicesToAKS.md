@@ -77,7 +77,7 @@ az keyvault set-policy -n $kvname --secret-permissions get list --spn $IDENTITY_
 ```powershell
 $AKS_OIDC_ISSUER=az aks show -n $aksname -g $rgname --query "oidcIssuerProfile.issuerUrl" -otsv
 
-az identity federated-credential create --name $namespace --identity-name $namespace --resource-group $appname --issuer $AKS_OIDC_ISSUER --subject "system:serviceaccount:${namespace}:${namespace}-serviceaccount"
+az identity federated-credential create --name $namespace --identity-name $namespace --resource-group $rgname --issuer $AKS_OIDC_ISSUER --subject "system:serviceaccount:${namespace}:identity-serviceaccount"
 ```
 
 ## Few commands to manage the AKS cluster
