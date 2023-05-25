@@ -56,6 +56,30 @@ kubectl describe pod PodName -n $namespace
 kubectl get services -n $namespace
 ```
 
+## Creating the Azure Managed Identity and granting it access to Key Vault secrets
+
+```powershell
+$rgname="rg-playeconomy-dev-001"
+$acrname="acrplayeconomydev001"
+$aksname="aks-playeconomy-dev-001"
+$namespace="identityservice"
+$kvname="kv-playeconomy-dev-001"
+```
+
+```powershell
+az identity create --resource-group $rgname --name $namespace
+$IDENTITY_CLIENT_ID=az identity show -g $rgname -n $namespace --query clientId -otsv
+az keyvault set-policy -n $kvname --secret-permissions get list --spn $IDENTITY_CLIENT_ID
+```
+
+## Establish the federated identity credential
+
+```powershell
+$AKS_OIDC_ISSUER=az aks show -n $appname -g $appname --query "oidcIssuerProfile.issuerUrl" -otsv
+
+az identity federated-credential create --name $namespace --identity-name $namespace --resource-group $appname --issuer $AKS_OIDC_ISSUER --subject "system:serviceaccount:${namespace}:${namespace}-serviceaccount"
+```
+
 ## Few commands to manage the AKS cluster
 
 ```powershell
