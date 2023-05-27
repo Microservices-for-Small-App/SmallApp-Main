@@ -23,7 +23,7 @@ az aks get-credentials --name $aksname --resource-group $rgname
 ## Create the Kubernetes namespace
 
 ```powershell
-$namespace="identityservice"
+$namespace="identity"
 kubectl create namespace $namespace
 ```
 
@@ -64,7 +64,7 @@ kubectl get services -n $namespace
 $rgname="rg-playeconomy-dev-001"
 $acrname="acrplayeconomydev001"
 $aksname="aks-playeconomy-dev-001"
-$namespace="identityservice"
+$namespace="identity"
 $kvname="kv-playeconomy-dev-001"
 ```
 
@@ -79,7 +79,7 @@ az keyvault set-policy -n $kvname --secret-permissions get list --spn $IDENTITY_
 ```powershell
 $AKS_OIDC_ISSUER=az aks show -n $aksname -g $rgname --query "oidcIssuerProfile.issuerUrl" -otsv
 
-az identity federated-credential create --name $namespace --identity-name $namespace --resource-group $rgname --issuer $AKS_OIDC_ISSUER --subject "system:serviceaccount:${namespace}:identity-serviceaccount"
+az identity federated-credential create --name $namespace --identity-name $namespace --resource-group $rgname --issuer $AKS_OIDC_ISSUER --subject "system:serviceaccount:${namespace}:${namespace}-serviceaccount"
 ```
 
 ## Few commands to manage the AKS cluster
