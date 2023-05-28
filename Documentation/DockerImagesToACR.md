@@ -27,9 +27,6 @@ docker build --secret id=GH_OWNER --secret id=GH_PAT --pull --rm -f "./Src/Ident
 #### 1.3.1. With Local MongoDB and RabbitMQ
 
 ```powershell
-# $kvUrl="https://kv-playeconomy-dev-001.vault.azure.net/"
-# -e KvUrl=$kvUrl
-
 $adminPass="Sample@123$"
 
 docker run -it --rm -d -p 5002:5002 --name ssp-identity -e MongoDbSettings__Host=mongo -e RabbitMQSettings__Host=rabbitmq -e IdentitySettings__AdminUserPassword=$adminPass --network dc-mongo-rmq_default $identityImageLatest
