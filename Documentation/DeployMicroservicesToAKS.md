@@ -39,25 +39,6 @@ kubectl create secret generic identity-secrets --from-literal=cosmosdb-connectio
 kubectl get secrets -n $namespace
 ```
 
-## Create the Kubernetes pod
-
-```powershell
-cd C:\LordKrishna\SSP\Services-PlayIdentity
-
-kubectl apply -f .\K8s\identity.yaml -n $namespace
-
-kubectl apply -f .\K8s\identitywithkv.yaml -n $namespace
-
-kubectl get events -n $namespace
-
-kubectl get pods -n $namespace
-kubectl get pods -o wide -n $namespace
-kubectl logs PodName -n $namespace
-kubectl describe pod PodName -n $namespace
-
-kubectl get services -n $namespace
-```
-
 ## Creating the Azure Managed Identity and granting it access to Key Vault secrets
 
 ```powershell
@@ -80,6 +61,25 @@ az keyvault set-policy -n $kvname --secret-permissions get list --spn $IDENTITY_
 $AKS_OIDC_ISSUER=az aks show -n $aksname -g $rgname --query "oidcIssuerProfile.issuerUrl" -otsv
 
 az identity federated-credential create --name $namespace --identity-name $namespace --resource-group $rgname --issuer $AKS_OIDC_ISSUER --subject "system:serviceaccount:${namespace}:${namespace}-serviceaccount"
+```
+
+## Create the Kubernetes pod
+
+```powershell
+cd C:\LordKrishna\SSP\Services-PlayIdentity
+
+kubectl apply -f .\K8s\identity.yaml -n $namespace
+
+kubectl apply -f .\K8s\identitywithkv.yaml -n $namespace
+
+kubectl get events -n $namespace
+
+kubectl get pods -n $namespace
+kubectl get pods -o wide -n $namespace
+kubectl logs PodName -n $namespace
+kubectl describe pod PodName -n $namespace
+
+kubectl get services -n $namespace
 ```
 
 ## Few commands to manage the AKS cluster
