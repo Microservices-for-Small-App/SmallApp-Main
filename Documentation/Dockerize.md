@@ -2,6 +2,10 @@
 
 ## 1. Build the Docker Image using Docker CLI and PowerShell
 
+```bash
+docker images | grep ssp-identity
+```
+
 ### 1.1. Export required Variables using PowerShell Windows Terminal
 
 ```powershell
