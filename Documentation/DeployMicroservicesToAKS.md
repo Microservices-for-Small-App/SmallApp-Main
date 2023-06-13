@@ -75,6 +75,16 @@ az keyvault set-policy -n $kvname --secret-permissions get list --spn $TRADING_C
 ```powershell
 $AKS_OIDC_ISSUER=az aks show -n $aksname -g $rgname --query "oidcIssuerProfile.issuerUrl" -otsv
 
+$namespace="identity"
+az identity federated-credential create --name $namespace --identity-name $namespace --resource-group $rgname --issuer $AKS_OIDC_ISSUER --subject "system:serviceaccount:${namespace}:${namespace}-serviceaccount"
+
+$namespace="catalog"
+az identity federated-credential create --name $namespace --identity-name $namespace --resource-group $rgname --issuer $AKS_OIDC_ISSUER --subject "system:serviceaccount:${namespace}:${namespace}-serviceaccount"
+
+$namespace="inventory"
+az identity federated-credential create --name $namespace --identity-name $namespace --resource-group $rgname --issuer $AKS_OIDC_ISSUER --subject "system:serviceaccount:${namespace}:${namespace}-serviceaccount"
+
+$namespace="trading"
 az identity federated-credential create --name $namespace --identity-name $namespace --resource-group $rgname --issuer $AKS_OIDC_ISSUER --subject "system:serviceaccount:${namespace}:${namespace}-serviceaccount"
 ```
 
