@@ -45,11 +45,11 @@ kubectl get secrets -n $namespace
 $rgname="rg-playeconomy-dev-001"
 $acrname="acrplayeconomydev001"
 $aksname="aks-playeconomy-dev-001"
-$namespace="identity"
 $kvname="kv-playeconomy-dev-001"
 ```
 
 ```powershell
+$namespace="identity"
 az identity create --resource-group $rgname --name $namespace
 $IDENTITY_CLIENT_ID=az identity show -g $rgname -n $namespace --query clientId -otsv
 az keyvault set-policy -n $kvname --secret-permissions get list --spn $IDENTITY_CLIENT_ID
