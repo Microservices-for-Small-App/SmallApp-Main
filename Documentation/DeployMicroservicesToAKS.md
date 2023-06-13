@@ -45,14 +45,29 @@ kubectl get secrets -n $namespace
 $rgname="rg-playeconomy-dev-001"
 $acrname="acrplayeconomydev001"
 $aksname="aks-playeconomy-dev-001"
-$namespace="identity"
 $kvname="kv-playeconomy-dev-001"
 ```
 
 ```powershell
+$namespace="identity"
 az identity create --resource-group $rgname --name $namespace
 $IDENTITY_CLIENT_ID=az identity show -g $rgname -n $namespace --query clientId -otsv
 az keyvault set-policy -n $kvname --secret-permissions get list --spn $IDENTITY_CLIENT_ID
+
+$namespace="catalog"
+az identity create --resource-group $rgname --name $namespace
+$CATALOG_CLIENT_ID=az identity show -g $rgname -n $namespace --query clientId -otsv
+az keyvault set-policy -n $kvname --secret-permissions get list --spn $CATALOG_CLIENT_ID
+
+$namespace="inventory"
+az identity create --resource-group $rgname --name $namespace
+$INVENTORY_CLIENT_ID=az identity show -g $rgname -n $namespace --query clientId -otsv
+az keyvault set-policy -n $kvname --secret-permissions get list --spn $INVENTORY_CLIENT_ID
+
+$namespace="trading"
+az identity create --resource-group $rgname --name $namespace
+$TRADING_CLIENT_ID=az identity show -g $rgname -n $namespace --query clientId -otsv
+az keyvault set-policy -n $kvname --secret-permissions get list --spn $TRADING_CLIENT_ID
 ```
 
 ## Establish the federated identity credential
@@ -60,6 +75,16 @@ az keyvault set-policy -n $kvname --secret-permissions get list --spn $IDENTITY_
 ```powershell
 $AKS_OIDC_ISSUER=az aks show -n $aksname -g $rgname --query "oidcIssuerProfile.issuerUrl" -otsv
 
+$namespace="identity"
+az identity federated-credential create --name $namespace --identity-name $namespace --resource-group $rgname --issuer $AKS_OIDC_ISSUER --subject "system:serviceaccount:${namespace}:${namespace}-serviceaccount"
+
+$namespace="catalog"
+az identity federated-credential create --name $namespace --identity-name $namespace --resource-group $rgname --issuer $AKS_OIDC_ISSUER --subject "system:serviceaccount:${namespace}:${namespace}-serviceaccount"
+
+$namespace="inventory"
+az identity federated-credential create --name $namespace --identity-name $namespace --resource-group $rgname --issuer $AKS_OIDC_ISSUER --subject "system:serviceaccount:${namespace}:${namespace}-serviceaccount"
+
+$namespace="trading"
 az identity federated-credential create --name $namespace --identity-name $namespace --resource-group $rgname --issuer $AKS_OIDC_ISSUER --subject "system:serviceaccount:${namespace}:${namespace}-serviceaccount"
 ```
 
@@ -68,6 +93,7 @@ az identity federated-credential create --name $namespace --identity-name $names
 ```powershell
 cd C:\LordKrishna\SSP\Services-PlayIdentity
 
+$namespace="identity"
 kubectl apply -f .\K8s\identity.yaml -n $namespace
 
 kubectl apply -f .\K8s\identitywithkv.yaml -n $namespace
