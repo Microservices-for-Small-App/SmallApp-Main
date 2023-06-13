@@ -53,6 +53,21 @@ $kvname="kv-playeconomy-dev-001"
 az identity create --resource-group $rgname --name $namespace
 $IDENTITY_CLIENT_ID=az identity show -g $rgname -n $namespace --query clientId -otsv
 az keyvault set-policy -n $kvname --secret-permissions get list --spn $IDENTITY_CLIENT_ID
+
+$namespace="catalog"
+az identity create --resource-group $rgname --name $namespace
+$CATALOG_CLIENT_ID=az identity show -g $rgname -n $namespace --query clientId -otsv
+az keyvault set-policy -n $kvname --secret-permissions get list --spn $CATALOG_CLIENT_ID
+
+$namespace="inventory"
+az identity create --resource-group $rgname --name $namespace
+$CATALOG_CLIENT_ID=az identity show -g $rgname -n $namespace --query clientId -otsv
+az keyvault set-policy -n $kvname --secret-permissions get list --spn $CATALOG_CLIENT_ID
+
+$namespace="trading"
+az identity create --resource-group $rgname --name $namespace
+$CATALOG_CLIENT_ID=az identity show -g $rgname -n $namespace --query clientId -otsv
+az keyvault set-policy -n $kvname --secret-permissions get list --spn $CATALOG_CLIENT_ID
 ```
 
 ## Establish the federated identity credential
