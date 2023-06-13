@@ -93,6 +93,7 @@ az identity federated-credential create --name $namespace --identity-name $names
 ```powershell
 cd C:\LordKrishna\SSP\Services-PlayIdentity
 
+$namespace="identity"
 kubectl apply -f .\K8s\identity.yaml -n $namespace
 
 kubectl apply -f .\K8s\identitywithkv.yaml -n $namespace
