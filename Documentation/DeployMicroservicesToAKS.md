@@ -25,11 +25,21 @@ az aks get-credentials --name $aksname --resource-group $rgname
 ```powershell
 $namespace="identity"
 kubectl create namespace $namespace
+
+$namespace="catalog"
+kubectl create namespace $namespace
+
+$namespace="inventory"
+kubectl create namespace $namespace
+
+$namespace="trading"
+kubectl create namespace $namespace
 ```
 
 ## Create the Kubernetes secrets
 
 ```powershell
+$namespace="identity"
 $adminPass="Sample@123$"
 $cosmosDbConnString="[Azure Cosmos DB CONN STRING HERE]"
 $serviceBusConnString="[CONN STRING HERE]"
@@ -92,11 +102,14 @@ az identity federated-credential create --name $namespace --identity-name $names
 
 ```powershell
 cd C:\LordKrishna\SSP\Services-PlayIdentity
-
 $namespace="identity"
 kubectl apply -f .\K8s\identity.yaml -n $namespace
-
 kubectl apply -f .\K8s\identitywithkv.yaml -n $namespace
+
+cd C:\LordKrishna\SSP\Services-Catalog
+$namespace="catalog"
+kubectl apply -f .\K8s\catalog.yaml -n $namespace
+kubectl apply -f .\K8s\catalogwithkv.yaml -n $namespace
 
 kubectl get events -n $namespace
 
