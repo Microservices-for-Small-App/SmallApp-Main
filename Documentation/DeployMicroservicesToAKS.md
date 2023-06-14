@@ -111,7 +111,6 @@ $namespace="catalog"
 kubectl apply -f .\K8s\catalog.yaml -n $namespace
 kubectl apply -f .\K8s\catalogwithkv.yaml -n $namespace
 
-
 kubectl get events -n $namespace
 
 kubectl get pods -n $namespace
