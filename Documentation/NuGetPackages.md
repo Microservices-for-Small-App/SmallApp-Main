@@ -63,7 +63,7 @@ $gh_packages="gHmicroservices"
 
 cd C:\LordKrishna\SSP\Libraries-Common\src\CommonLibrary
 # Update the version number and ensure it matches the version in the csproj file
-$version="1.0.30"  
+$version="1.1.1"  
 $package_name="CommonLibrary"
 $host.ui.RawUI.WindowTitle=$package_name
 
